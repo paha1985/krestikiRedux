@@ -1,9 +1,10 @@
 import styles from './app.module.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Field } from './field';
 import { Information } from './information';
 import PropTypes from 'prop-types';
 import { store } from './store';
+import { AppContext } from './context';
 
 export const App = () => {
 	// const [currentPlayer, setCurrentPlayer] = useState('X');
@@ -76,14 +77,18 @@ export const App = () => {
 		store.dispatch({ type: 'CLEAR', payload: '' });
 	}
 
-	return <AppLayout appStore={store.getState()} clear={clear} cellClick={cellClick} />;
+	return (
+		<AppContext.Provider value={store.getState()}>
+			<AppLayout clear={clear} cellClick={cellClick} />;
+		</AppContext.Provider>
+	);
 };
 
-export const AppLayout = ({ appStore, clear, cellClick }) => {
+export const AppLayout = ({ clear, cellClick }) => {
 	return (
 		<div className={styles['wrapper']}>
-			<Information appStore={appStore} />
-			<Field appStore={appStore} click={cellClick} />
+			<Information />
+			<Field click={cellClick} />
 			<button className={styles['newGame']} onClick={() => clear()}>
 				Начать заново
 			</button>
@@ -91,11 +96,11 @@ export const AppLayout = ({ appStore, clear, cellClick }) => {
 	);
 };
 
-AppLayout.propTypes = {
-	currentPlayer: PropTypes.string,
-	isGameEnded: PropTypes.bool,
-	isDraw: PropTypes.bool,
-	clear: PropTypes.func,
-	field: PropTypes.array,
-	cellClick: PropTypes.func,
-};
+// AppLayout.propTypes = {
+// 	currentPlayer: PropTypes.string,
+// 	isGameEnded: PropTypes.bool,
+// 	isDraw: PropTypes.bool,
+// 	clear: PropTypes.func,
+// 	field: PropTypes.array,
+// 	cellClick: PropTypes.func,
+// };

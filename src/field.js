@@ -1,7 +1,10 @@
+import { useContext } from 'react';
 import styles from './field.module.css';
 import PropTypes from 'prop-types';
+import { AppContext } from './context';
 
-export const Field = ({ appStore, click }) => {
+export const Field = ({ click }) => {
+	const appStore = useContext(AppContext);
 	return <FieldLayout cells={appStore.field} click={click} />;
 };
 

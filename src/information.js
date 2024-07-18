@@ -1,16 +1,19 @@
 import styles from './information.module.css';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { AppContext } from './context';
 
 //const { currentPlayer, isGameOver, isDraw } = store.getState();
 
 //export const Information = (props) => {
-export const Information = (props) => {
+export const Information = () => {
+	const appStore = useContext(AppContext);
 	return (
 		<InformationLayout
-			player={props.appStore.currentPlayer}
-			gameOver={props.appStore.isGameEnded}
-			draw={props.appStore.isDraw}
+			player={appStore.currentPlayer}
+			gameOver={appStore.isGameEnded}
+			draw={appStore.isDraw}
 			// player={currentPlayer}
 			// gameOver={isGameOver}
 			// draw={isDraw}
